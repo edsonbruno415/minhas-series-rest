@@ -41,9 +41,7 @@ app.put('/series/:id', async (request, response) => {
         const id = parseInt(request.params.id);
         const { nome, status } = request.body;
         const result = await db.update(id, { nome, status });
-        response.json({
-            success: true
-        });
+        response.json(result);
     }
     catch (error) {
         response.json({
