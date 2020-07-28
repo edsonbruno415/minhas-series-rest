@@ -32,7 +32,7 @@ class FileContext extends IContext {
             const serie = new Serie(item);
             const series = await this.read();
             serie['id'] = parseInt((Math.random() * 1001) + 1);
-            series.push(serie);
+            series.unshift(serie);
             await writeFileAsync(this._pathFile, JSON.stringify(series, ' ', 2));
             return serie;
         }
@@ -60,12 +60,13 @@ class FileContext extends IContext {
             if (indexserie === -1) {
                 throw Error('Indice inválido');
             }
-            series[indexserie] = {
+            const updatedSerie = {
                 ...serie,
                 id
             }
+            series[indexserie] = updatedSerie;
             await writeFileAsync(this._pathFile, JSON.stringify(series, ' ', 2));
-            return;
+            return updatedSerie;
         }
         catch (error) {
             throw Error(error.message);
